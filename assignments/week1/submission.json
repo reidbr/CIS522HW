@@ -2,13 +2,12 @@
     "assignment_name": "Assignment 1",
     "contributors": [
         {
-            "name": "Jordan Matelsky",
-            "pennkey": "matelsky"
+            "name": "Brandon Reid",
+            "pennkey": "reidbr"
         }
     ],
     "sources": [
-        "https://example.com",
-        "Conversations with TA (include TA's name)",
-        "LLM (include information about the LLM and how it was used)"
+        "Used W2D1 Tutorial Notebook to understand concepts",
+        "Refered back to my Linear Regression CIS581 HW from last semester for specific implementation details"
     ]
 }
