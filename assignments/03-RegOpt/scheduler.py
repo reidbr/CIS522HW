@@ -21,6 +21,21 @@ class CustomLRScheduler(_LRScheduler):
         # this function (because it is called internally by Torch)
 
         if self.last_epoch < self.warmup_epochs:
-            return [base_lr * (self.last_epoch + 1) / self.warmup_epochs for base_lr in self.base_lrs]
+            return [
+                base_lr * (self.last_epoch + 1) / self.warmup_epochs
+                for base_lr in self.base_lrs
+            ]
 
-        return [base_lr * (1 + np.cos(np.pi * (self.last_epoch - self.warmup_epochs) / (self.max_epochs - self.warmup_epochs))) / 2 for base_lr in self.base_lrs]
+        return [
+            base_lr
+            * (
+                1
+                + np.cos(
+                    np.pi
+                    * (self.last_epoch - self.warmup_epochs)
+                    / (self.max_epochs - self.warmup_epochs)
+                )
+            )
+            / 2
+            for base_lr in self.base_lrs
+        ]
