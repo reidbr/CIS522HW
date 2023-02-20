@@ -2,6 +2,7 @@ import torch
 from typing import Callable
 import torch
 
+
 class MLP(torch.nn.Module):
     def __init__(
         self,
@@ -33,7 +34,7 @@ class MLP(torch.nn.Module):
         self.layers = torch.nn.ModuleList()
         self.layers.append(torch.nn.Linear(input_size, hidden_size))
 
-        for i in range(hidden_count-1):
+        for i in range(hidden_count - 1):
             self.layers.append(torch.nn.Linear(hidden_size, hidden_size))
 
         self.layers.append(torch.nn.Linear(hidden_size, num_classes))

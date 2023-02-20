@@ -5,6 +5,7 @@ class LinearRegression:
     """
     A linear regression model that uses the closed form solution to  fit the model
     """
+
     w: np.ndarray
     b: float
 
@@ -25,7 +26,7 @@ class LinearRegression:
 
         """
         self.w = np.linalg.inv(X.T @ X) @ X.T @ y
-        self.b = np.mean(y) - np.mean(X, axis=0).dot(self.w) 
+        self.b = np.mean(y) - np.mean(X, axis=0).dot(self.w)
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         """
@@ -67,8 +68,8 @@ class GradientDescentLinearRegression(LinearRegression):
         n = len(X)
         for _ in range(epochs):
             y_pred = X @ self.w + self.b
-            gradient_weight = (-2/n) * X.T @ (y - y_pred)
-            gradient_bias = (-2/n) * np.sum(y - y_pred)
+            gradient_weight = (-2 / n) * X.T @ (y - y_pred)
+            gradient_bias = (-2 / n) * np.sum(y - y_pred)
             self.w -= lr * gradient_weight
             self.b -= lr * gradient_bias
 
