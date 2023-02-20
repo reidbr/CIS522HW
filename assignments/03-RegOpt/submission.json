@@ -2,11 +2,12 @@
     "assignment_name": "RegOpt",
     "contributors": [
         {
-            "name": "Change this to your name",
-            "pennkey": "MyPennKey"
+            "name": "Brandon Reid",
+            "pennkey": "reidbr"
         }
     ],
     "sources": [
-        "Don't forget to list your sources/attribution here!"
+        "https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.CosineAnnealingLR.html",
+        "https://towardsdatascience.com/the-best-learning-rate-schedules-6b7b9fb72565"
     ]
 }
