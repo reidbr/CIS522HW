@@ -4,6 +4,11 @@ from torch.optim.lr_scheduler import _LRScheduler
 
 
 class CustomLRScheduler(_LRScheduler):
+    """
+    Set the learning rate of each parameter group using a cosine annealing
+    schedule
+
+    """
     def __init__(self, optimizer, last_epoch=-1, max_epochs=100, warmup_epochs=10):
         """
         Create a new scheduler.
