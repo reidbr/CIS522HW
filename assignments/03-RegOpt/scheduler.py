@@ -9,6 +9,7 @@ class CustomLRScheduler(_LRScheduler):
     schedule
 
     """
+    
     def __init__(self, optimizer, last_epoch=-1, max_epochs=100, warmup_epochs=10):
         """
         Create a new scheduler.
