@@ -11,6 +11,7 @@ class QNetwork(nn.Module):
     """
     A simple fully-connected network with 4 layers.
     """
+
     def __init__(self, input_dim, output_dim):
         super(QNetwork, self).__init__()
         self.fc1 = nn.Linear(input_dim, 64)
@@ -27,12 +28,12 @@ class QNetwork(nn.Module):
         x = self.fc4(x)
         return x
 
+
 # Add docstrings to the class and its methods.
 class Agent:
     """
     A simple DQN agent.
     """
-
 
     def __init__(
         self, action_space: gym.spaces.Discrete, observation_space: gym.spaces.Box
