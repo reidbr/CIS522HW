@@ -8,6 +8,9 @@ from collections import deque
 
 
 class QNetwork(nn.Module):
+    """
+    A simple fully-connected network with 4 layers.
+    """
     def __init__(self, input_dim, output_dim):
         super(QNetwork, self).__init__()
         self.fc1 = nn.Linear(input_dim, 64)
@@ -24,11 +27,26 @@ class QNetwork(nn.Module):
         x = self.fc4(x)
         return x
 
-
+# Add docstrings to the class and its methods.
 class Agent:
+    """
+    A simple DQN agent.
+    """
+
+
     def __init__(
         self, action_space: gym.spaces.Discrete, observation_space: gym.spaces.Box
     ):
+        """
+        Create a new agent.
+
+        Parameters
+        ----------
+        action_space : gym.spaces.Discrete
+            The action space of the environment.
+        observation_space : gym.spaces.Box
+            The observation space of the environment.
+        """
         self.action_space = action_space
         self.observation_space = observation_space
 
@@ -54,6 +72,14 @@ class Agent:
         self.last_action = None
 
     def act(self, observation: gym.spaces.Box) -> gym.spaces.Discrete:
+        """
+        Select an action according to the current policy.
+
+        Parameters
+        ----------
+        observation : gym.spaces.Box
+            The current observation of the environment.
+        """
         self.last_observation = observation
         if random.random() < self.epsilon:
             self.last_action = self.action_space.sample()
@@ -71,6 +97,20 @@ class Agent:
         terminated: bool,
         truncated: bool,
     ) -> None:
+        """
+        Learn from the last action taken.
+
+        Parameters
+        ----------
+        observation : gym.spaces.Box
+            The current observation of the environment.
+        reward : float
+            The reward received from the environment.
+        terminated : bool
+            Whether the episode has terminated.
+        truncated : bool
+            Whether the episode was truncated.
+        """
         if self.last_observation is not None and self.last_action is not None:
             self.memory.append(
                 (
