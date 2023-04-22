@@ -6,6 +6,7 @@ import numpy as np
 import random
 from collections import deque
 
+
 class QNetwork(nn.Module):
     def __init__(self, input_dim, output_dim):
         super(QNetwork, self).__init__()
@@ -33,8 +34,12 @@ class Agent:
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        self.q_network = QNetwork(observation_space.shape[0], action_space.n).to(self.device)
-        self.target_network = QNetwork(observation_space.shape[0], action_space.n).to(self.device)
+        self.q_network = QNetwork(observation_space.shape[0], action_space.n).to(
+            self.device
+        )
+        self.target_network = QNetwork(observation_space.shape[0], action_space.n).to(
+            self.device
+        )
         self.target_network.load_state_dict(self.q_network.state_dict())
 
         self.optimizer = optim.Adam(self.q_network.parameters(), lr=0.001)
@@ -67,26 +72,48 @@ class Agent:
         truncated: bool,
     ) -> None:
         if self.last_observation is not None and self.last_action is not None:
-            self.memory.append((self.last_observation, self.last_action, reward, observation, terminated))
+            self.memory.append(
+                (
+                    self.last_observation,
+                    self.last_action,
+                    reward,
+                    observation,
+                    terminated,
+                )
+            )
 
         if len(self.memory) < self.batch_size:
             return
 
         samples = random.sample(self.memory, self.batch_size)
-        batch_states, batch_actions, batch_rewards, batch_next_states, batch_terminated = zip(*samples)
+        (
+            batch_states,
+            batch_actions,
+            batch_rewards,
+            batch_next_states,
+            batch_terminated,
+        ) = zip(*samples)
 
         batch_states = torch.FloatTensor(np.array(batch_states)).to(self.device)
-        batch_actions = torch.tensor(batch_actions, dtype=torch.long).unsqueeze(1).to(self.device)
+        batch_actions = (
+            torch.tensor(batch_actions, dtype=torch.long).unsqueeze(1).to(self.device)
+        )
         batch_rewards = torch.FloatTensor(batch_rewards).unsqueeze(1).to(self.device)
-        batch_next_states = torch.FloatTensor(np.array(batch_next_states)).to(self.device)
-        batch_terminated = torch.BoolTensor(batch_terminated).unsqueeze(1).to(self.device)
+        batch_next_states = torch.FloatTensor(np.array(batch_next_states)).to(
+            self.device
+        )
+        batch_terminated = (
+            torch.BoolTensor(batch_terminated).unsqueeze(1).to(self.device)
+        )
 
         q_values = self.q_network(batch_states)
         target_q_values = self.target_network(batch_next_states)
         q_values = q_values.gather(1, batch_actions)
         target_q_values, _ = target_q_values.max(1, keepdim=True)
 
-        target_q_values = batch_rewards + (self.gamma * target_q_values * (1 - batch_terminated.float()))
+        target_q_values = batch_rewards + (
+            self.gamma * target_q_values * (1 - batch_terminated.float())
+        )
 
         loss = self.loss_fn(q_values, target_q_values.detach())
 
