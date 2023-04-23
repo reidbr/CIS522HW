@@ -29,7 +29,7 @@ for _ in range(100000):
         last_n_rewards.append(total_reward)
         n = min(30, len(last_n_rewards))
         avg = sum(last_n_rewards[-n:]) / n
-        improvement_emoji = "🔥" if (total_reward > avg) else "😢"
+        # improvement_emoji = "🔥" if (total_reward > avg) else "😢"
         # print(
         #     f"{improvement_emoji} Finished with reward {int(total_reward)}.\tAverage of last {n}: {int(avg)}"
         # )
